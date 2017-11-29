@@ -34,18 +34,48 @@
   },
   "acls": [
     {
-      "accessType": "*",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
-      "permission": "DENY"
+      "permission": "",
+      "property": "create"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "create"
+      "property": "AceptarSolicitud"
     }
   ],
-  "methods": {}
+  "methods": {
+    "prototype.AceptarSolicitud": {
+      "accepts": [
+        {
+          "arg": "variable",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "context"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "solicitud",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "Vamos a aceptar las solicitudes ",
+      "http": [
+        {
+          "path": "/AceptarSolicitud",
+          "verb": "put"
+        }
+      ]
+    }
+  }
 }
