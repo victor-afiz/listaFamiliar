@@ -14,6 +14,7 @@ module.exports = function (Usuario) {
 
     Usuario.prototype.AceptarSolicitud = function (variable, callback) {
         var solicitud;
+        var borrar;
         // TODO
         var userid = variable.req.accessToken.userId;
         var listaUser = this;
@@ -28,33 +29,30 @@ module.exports = function (Usuario) {
             listaUser.Solicitud(function (err, listas) {
                 var id = listas[0].id;
 
-                if(listud===id){
+                if (listud === id) {
                     //console.log(id);
-                listaUser.listaFamiliarId = id;
-                listaUser.save(function (err) {
-                    solicitud = {
-                        id: id,
-                        listaUser
-                    };
-                    callback(null, solicitud);
+                    listaUser.listaFamiliarId = id;
+                    listaUser.save(function (err) {
+                        solicitud = {
 
-                });
-                }else{
-                  solicitud = {
+                            listaUser
+                        };
+                        callback(null, solicitud);
+                        listas[0].Solicitud.remove(listaUser, function (err) {
+
+                        });
+                    });
+                } else {
+                    solicitud = {
                         Mensaje: "No perteneces a esta lista"
-                   };  
-                   
-                   callback(null, solicitud);
+                    };
+
+                    callback(null, solicitud);
                 }
-                
 
             });
         });
 
-
-
-
     };
-
 
 };
