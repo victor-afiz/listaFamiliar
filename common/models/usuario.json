@@ -46,6 +46,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "AceptarSolicitud"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "BorrarSolicitud"
     }
   ],
   "methods": {
@@ -74,6 +81,34 @@
         {
           "path": "/AceptarSolicitud",
           "verb": "put"
+        }
+      ]
+    },
+    "prototype.BorrarSolicitud": {
+      "accepts": [
+        {
+          "arg": "UserId",
+          "type": "object",
+          "required": true,
+          "description": "Contiene todos los valores de usuario que nosotros introduzcamos",
+          "http": {
+            "source": "context"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "Miembros",
+          "type": "array",
+          "root": true,
+          "description": "Contendra todos los usuarios que  estan en mi lista"
+        }
+      ],
+      "description": "Borraremos una peticion de union a una listaFamilar apartir del id que le pasaremos",
+      "http": [
+        {
+          "path": "/RechazarSolicitud",
+          "verb": "delete"
         }
       ]
     }

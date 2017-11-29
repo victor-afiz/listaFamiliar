@@ -54,5 +54,54 @@ module.exports = function (Usuario) {
         });
 
     };
+    
+    /**
+ * Borraremos una peticion de union a una listaFamilar apartir del id que le pasaremos
+ * @param {object} UserId Contiene todos los valores de usuario que nosotros introduzcamos
+ * @param {Function(Error, array)} callback
+ */
+
+        Usuario.prototype.BorrarSolicitud = function(UserId, callback) {
+             var Miembros;
+                // TODO
+            var userid = UserId.req.accessToken.userId;
+            var listaUser = this;
+            var listud = null;
+            Usuario.findById(userid, function (err, usuario) {
+            listud = usuario.listaFamiliarId;
+
+            //Usuario.findById(idUser, function (err, usuario )
+
+           // console.log(listud);
+            listaUser.Solicitud(function (err, listas) {
+                var id = listas[0].id;
+
+                if (listud === id) {
+                    //console.log(id);
+                    listas[0].Solicitud.remove(listaUser, function (err) {
+                         Usuario.find({where: {listaFamiliarId: listud}}, function (err, Miembros) {
+                         
+                      callback(null, Miembros);  
+                      });
+                    });
+                    
+                    
+                    
+                } else {
+                    solicitud = {
+                        Mensaje: "No perteneces a esta lista"
+                    };
+
+                    callback(null, solicitud);
+                }
+
+            });
+        });
+            
+            
+             
+        };
+
+
 
 };
