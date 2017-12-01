@@ -54,39 +54,38 @@ module.exports = function (Usuario) {
         });
 
     };
-    
-    /**
- * Borraremos una peticion de union a una listaFamilar apartir del id que le pasaremos
- * @param {object} UserId Contiene todos los valores de usuario que nosotros introduzcamos
- * @param {Function(Error, array)} callback
- */
 
-        Usuario.prototype.BorrarSolicitud = function(UserId, callback) {
-             var Miembros;
-                // TODO
-            var userid = UserId.req.accessToken.userId;
-            var listaUser = this;
-            var listud = null;
-            Usuario.findById(userid, function (err, usuario) {
+    /**
+     * Borraremos una peticion de union a una listaFamilar apartir del id que le pasaremos
+     * @param {object} UserId Contiene todos los valores de usuario que nosotros introduzcamos
+     * @param {Function(Error, array)} callback
+     */
+
+    Usuario.prototype.BorrarSolicitud = function (UserId, callback) {
+        var Miembros;
+        // TODO
+        var userid = UserId.req.accessToken.userId;
+        var listaUser = this;
+        var listud = null;
+        Usuario.findById(userid, function (err, usuario) {
             listud = usuario.listaFamiliarId;
 
             //Usuario.findById(idUser, function (err, usuario )
 
-           // console.log(listud);
+            // console.log(listud);
             listaUser.Solicitud(function (err, listas) {
                 var id = listas[0].id;
 
                 if (listud === id) {
                     //console.log(id);
                     listas[0].Solicitud.remove(listaUser, function (err) {
-                         Usuario.find({where: {listaFamiliarId: listud}}, function (err, Miembros) {
-                         
-                      callback(null, Miembros);  
-                      });
+                        Usuario.find({where: {listaFamiliarId: listud}}, function (err, Miembros) {
+                            scallback(null, Miembros);
+                        });
                     });
-                    
-                    
-                    
+
+
+
                 } else {
                     solicitud = {
                         Mensaje: "No perteneces a esta lista"
@@ -97,10 +96,29 @@ module.exports = function (Usuario) {
 
             });
         });
-            
-            
-             
-        };
+
+
+
+    };
+
+    /**
+     * Vamos a borrar todos los productos de la lista del usuario utendicado
+     * @param {object} contexto contiene Objeto del usuario autenticado
+     * @param {Function(Error, array)} callback
+     */
+
+    Usuario.prototype.limparLista = function (contexto, callback) {
+        var ProductosFamiliar;
+        // TODO
+        var userId=contexto.req.accessToken.userId;
+        
+        Usuario.findById(userId, function (err,UserBoject){
+            console.log(UserBoject);
+        });
+        callback(null, ProductosFamiliar);
+    };
+
+
 
 
 

@@ -53,6 +53,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "BorrarSolicitud"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "limparLista"
     }
   ],
   "methods": {
