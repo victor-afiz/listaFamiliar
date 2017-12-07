@@ -18,6 +18,7 @@ module.exports = function (ListaFamiliar) {
             usr.listaFamiliarId = listaFamiliar.id;
             usr.save();
             next();
+
         });
     });
     //Creamos un metodo remoto para añador a la relacion entre Usuarios y lista el id de la lista al que el usuario
@@ -28,7 +29,7 @@ module.exports = function (ListaFamiliar) {
         var IdUser = context.req.accessToken.userId;
         var idlista = this.id;
         //
-        
+
         // En esta linea vamos a insertar en la tabla Solicitud 
         this.Solicitud.add(IdUser,
                 function (err) {
@@ -45,7 +46,36 @@ module.exports = function (ListaFamiliar) {
 
 
     };
-    
+
+    ListaFamiliar.afterRemote('prototype.solicitar', function (context, listaFamiliar, next) {
+
+        var Usuario = ListaFamiliar.app.models.Usuario;
+        var IdUser = context.req.accessToken.userId;
+        var userlista = null;
+        var lista = listaFamiliar.listaFamiliarId;
+
+        console.log(IdUser);
+        Usuario.findById(IdUser, function (err, usr) {
+            console.log(usr);
+            usr.Solicitud(function (err, part) {
+                var x = part.length;
+                console.log(x);
+                console.log(part);
+                for (var i = 0; i < x-1; i++) {
+                    usr.Solicitud.destroy(part[i], function (err) {
+                        
+                    });
+                    next();
+                }
+            });
+
+
+        });
+
+
+
+
+    });
 
 
 };
